@@ -1,0 +1,26 @@
+{
+  "timeZone": "America/Argentina/Buenos_Aires",
+  "dependencies": {
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Calendar",
+        "serviceId": "calendar",
+        "version": "v3"
+      }
+    ]
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "sheets": {
+    "macros": [
+      {
+        "menuName": "Limpiando",
+        "functionName": "Limpiando"
+      },
+      {
+        "menuName": "Limpiando",
+        "functionName": "Limpiando"
+      }
+    ]
+  }
+}
