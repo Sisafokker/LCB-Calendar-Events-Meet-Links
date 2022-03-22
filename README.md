@@ -1,2 +1,7 @@
 # Calendar-Events-Meet-Links
-Create and Modify events. Single events and recurring. Get Meet Links, Errase events, Remove invites
+Container Bound Script. 
+Create events from spreadhsheet (Single events and recurring)
+Modify events. 
+Errase events.
+Remove/change invites
+Get Meet Links, Errase events, Remove invites
