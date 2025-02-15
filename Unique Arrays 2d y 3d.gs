@@ -4,7 +4,7 @@ VERIFICA UNA COINCIDENCIA EN CIERTAS COLUMNAS, NO EN TODAS
 */
 function uniqueTwoDArrayParcial() {
   var hoja = "2-GetMeetLinks";
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = SpreadsheetApp.openById(thisSsID);
   var editSheet = ss.getSheetByName(hoja);
 
 // TODO EL ARRAY
@@ -12,8 +12,9 @@ function uniqueTwoDArrayParcial() {
 // ARRAY DE LO QUE QUIERO COMPARAR UNICAMENTE  
   var allEvents = editSheet.getRange(2,4,editSheet.getLastRow(),4).getValues();
   
-  Logger.log(allEvents);
+  console.log("Eventos CON Duplicados: ")
   Logger.log(allEvents.length)
+  //Logger.log(allEvents);
     
     var uniques = [];
     var itemsFound = {};
@@ -23,12 +24,14 @@ function uniqueTwoDArrayParcial() {
         uniques.push(allEventsFull[i]); // EMPUJA LA FILA DEL ARRAY COMPLETO, NO EL PARCIAL
         itemsFound[stringified] = true;
     }
-    Logger.log(uniques);
+    console.log("Eventos SIN Duplicados: ")
     Logger.log(uniques.length)
-    Logger.log(uniques[0].length)
+    // Logger.log(uniques);
+    // Logger.log(uniques[0].length)
 
     limpiandoMeetLinks();
     editSheet.getRange(2, 4, uniques.length, uniques[0].length).setValues(uniques);
+    return uniques;
 }
 
 /*
@@ -40,7 +43,7 @@ function uniqueTwoDArrayParcial() {
 // */
 // function uniqueOneDArray() {
 //   var hoja = "2-GetMeetLinks";
-//   var ss = SpreadsheetApp.getActiveSpreadsheet();
+//   var ss = SpreadsheetApp.openById(thisSsID);
 //   var editSheet = ss.getSheetByName(hoja);
 
 //   var allEvents = editSheet.getRange(3,4,editSheet.getLastRow(),7).getValues();
@@ -70,7 +73,7 @@ function uniqueTwoDArrayParcial() {
 // */
 // function uniqueTwoDArray() {
 //   var hoja = "2-GetMeetLinks";
-//   var ss = SpreadsheetApp.getActiveSpreadsheet();
+//   var ss = SpreadsheetApp.openById(thisSsID);
 //   var editSheet = ss.getSheetByName(hoja);
 
 //   var allEvents = editSheet.getRange(2,4,editSheet.getLastRow(),4).getValues();

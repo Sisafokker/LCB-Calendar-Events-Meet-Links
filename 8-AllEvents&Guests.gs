@@ -6,14 +6,14 @@ imprimirArray.push([ "Usuario", "EventName", "Event ID", "Description","StartTim
 
 function getAllEventsAndMeetLinksAndGuests() {
   limpiandoMeetLinksAndGuests();
-  var ss = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(hojaAllEvents);
-  var sheetFechaData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("DATA");
+  var ss = SpreadsheetApp.openById(thisSsID).getSheetByName(hojaAllEvents);
+  var sheetFechaData = SpreadsheetApp.openById(thisSsID).getSheetByName("DATA");
   const primerLunesSerie = sheetFechaData.getRange('B11').getValue();
   const primerDomingoSerie = sheetFechaData.getRange('B12').getValue();  
   const start = new Date(primerLunesSerie);
   const end = new Date(primerDomingoSerie);   
 
-  var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var ss = SpreadsheetApp.openById(thisSsID).getActiveSheet();
   var lr = ss.getLastRow();
   var data = ss.getRange("a2:A" + lr).getValues();  
   // Filtra la data en A, solo las celdas no vacias.
@@ -72,7 +72,7 @@ function getAllEventsAndMeetLinksAndGuests() {
           
         }
         console.log(imprimirArray);
-        var ss2 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(hojaAllEvents);
+        var ss2 = SpreadsheetApp.openById(thisSsID).getSheetByName(hojaAllEvents);
         ss2.getRange(2, 4, imprimirArray.length, imprimirArray[0].length).setValues(imprimirArray);
      }
       else { console.log("No encontro el Calendario: "+calendarId); }
@@ -80,7 +80,7 @@ function getAllEventsAndMeetLinksAndGuests() {
   }
  
 function limpiandoMeetLinksAndGuests() {
- const spreadsheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(hojaAllEvents);
+ const spreadsheet = SpreadsheetApp.openById(thisSsID).getSheetByName(hojaAllEvents);
  spreadsheet.getRange('D3:L').clearContent();
  spreadsheet.getRange('A1').activate();
 };

@@ -22,5 +22,9 @@
         "functionName": "Limpiando"
       }
     ]
+  },
+  "webapp": {
+    "executeAs": "USER_DEPLOYING",
+    "access": "DOMAIN"
   }
 }

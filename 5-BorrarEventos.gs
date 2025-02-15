@@ -2,9 +2,11 @@
 const hojaBorrarEventos = '5-BorraEventos'
 
 function borrarListadeEventos() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var tiempoInicio = startingFX();
+  var ss = SpreadsheetApp.openById(thisSsID).getSheetByName(hojaBorrarEventos);
   var lr = ss.getLastRow();
   var data = ss.getRange("A2:D" + lr).getValues();
+  let resultado;
 
   // Ventana preguntando si quieres correr el script
   var ui = SpreadsheetApp.getUi();
@@ -15,31 +17,46 @@ function borrarListadeEventos() {
     Logger.log('The user clicked "Yes."');
 
         // Filtra la data que tiene el Checkbox = True
-        data = data.filter(function (r) {return r [3] == "SI"});
-        Logger.log(data);
+        data = data.filter(r =>  r[3] == "SI");
+        //Logger.log(data);
 
-        for (var i = 0;i<data.length;i++){
+        for (var i = 0;i < data.length ; i++){
           
           try {
-          var idEvento = data [i][2];
-          var nombre = data[i][1];
-          var owner = data[i][0];;
-          Logger.log(idEvento);
-          Logger.log(nombre);
-          Logger.log(owner);
+            var idEvento = data [i][2];
+            Logger.log(idEvento);
+            if (idEvento.toString().includes("CSVConvert") || idEvento.lenght > 40) {
+              resultado = '🚫 No Eliminable';  
+              console.warn(resultado);
+            } else {
+              var nombre = data[i][1];
+              var owner = data[i][0];;
+              // Logger.log(nombre);
+              // Logger.log(owner);
 
-          var cal = CalendarApp.getCalendarById(owner);
-          var event = cal.getEventSeriesById(idEvento);
-          event.deleteEventSeries().sendInvites(true); 
-          Logger.log(nombre+' :Eliminado');
+              var cal = CalendarApp.getCalendarById(owner);
+              var event = cal.getEventSeriesById(idEvento);
+              if (event != null) {
+                event.deleteEventSeries();
+                //event.deleteEventSeries().sendInvites(true); 
+                resultado = `${owner} | ${nombre} | ${idEvento} | 👍 Eliminado`;
+                console.warn(resultado);
+              }
+              
+            }
           
-          } catch (e) {
-            Logger.log(e);
+          } catch (err) {
+            Logger.log(err);
+            if (err.toString().includes("The calendar event does not exist")) {
+              resultado = "👍 Event does not exist: "+nombre;
+              console.log(resultado);
+            }
           }
           // Vuelve a actualizar lista de Eventos.
           
-          
     }
+      var duracion = totalDuration(tiempoInicio);
+      
       var response = ui.alert('Quieres GET MEET LINKS? (Elige SI, a menos que sea una prueba)', ui.ButtonSet.YES_NO);
         // Process the user's response.
         if (response == ui.Button.YES) {
@@ -53,6 +70,7 @@ function borrarListadeEventos() {
   } else {
     Logger.log('NO BORRASTE NADA. Cancelaste correr el script');
   }
+  
 }
 
 
@@ -67,7 +85,7 @@ function borraManual(){
 }
 
 function limpiandoHojaBorrar() {
- const spreadsheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(hojaBorrarEventos);
+ const spreadsheet = SpreadsheetApp.openById(thisSsID).getSheetByName(hojaBorrarEventos);
  spreadsheet.getRange('D3:D').clearContent();
  spreadsheet.getRange('A1').activate();
 };

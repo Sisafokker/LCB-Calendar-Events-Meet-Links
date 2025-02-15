@@ -1,6 +1,6 @@
 // EDITS CALENDAR EVENTS
 function ModificaEventComparte() {
-var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+var ss = SpreadsheetApp.openById(thisSsID).getActiveSheet();
 var lr = ss.getLastRow();
 var data = ss.getRange("A5:R" + lr).getValues();
 columnaEscribir = 18   // Numero de Columan Array + 1 porque es spreadsheet
